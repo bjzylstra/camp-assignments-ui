@@ -1,0 +1,28 @@
+<!-- Camps editor page -->
+<div style="text-align:center">
+  <h1>
+    {{title}}
+  </h1>
+  <h2>Camps for 2017</h2>
+</div>
+<h2>Select a camp to update</h2>
+<ul class='camps'>
+  <li *ngFor='let camp of camps' (click)='onSelect(camp)' [class.selected]='camp == selectedCamp'>
+    <span class='badge'>{{camp.description}}</span>
+    		({{camp.dateRangeText()}})
+  </li>
+</ul>
+<div *ngIf='selectedCamp'>
+  <p>
+    <label>Camp Description</label>
+    <input [(ngModel)]="selectedCamp.description" placeholder='description'>
+  </p>
+  <p>
+    <label>Camp Start Date</label>
+    <input type='date' value="updateStartDateText" placeholder='updateStartDateText'>
+  </p>
+  <p>
+    <label>Camp End Date</label>
+    <input type='date' [(ngModel)]="selectedCamp.endDate" placeholder='description'>
+  </p>
+</div>

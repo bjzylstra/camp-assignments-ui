@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms'; // For NgModel
 
 import { AppComponent } from './app.component';
+import { CampEditorComponent } from './camp-editor/camp-editor.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CampEditorComponent
   ],
   imports: [
     BrowserModule,
