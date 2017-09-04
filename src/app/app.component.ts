@@ -32,7 +32,14 @@ const CAMPS: Camp[] = [
 
 export class AppComponent {
   title = 'Camp Assignments';
-  currentCampId = 1;
+  selectedCampId = 3;
   camps = CAMPS;
-  currentCamp: Camp = CAMPS[1];
+  selectedCamp: Camp;
+  constructor() {
+    this.selectedCamp = this.camps.find(currentItem => currentItem.id === this.selectedCampId);
+  }
+  onSelect(camp: Camp): void {
+    this.selectedCamp = camp;
+    this.selectedCampId = camp.id;
+  }
 }

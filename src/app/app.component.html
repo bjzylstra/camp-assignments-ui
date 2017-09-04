@@ -3,18 +3,23 @@
   <h1>
     {{title}}
   </h1>
-  <h2>Currently assigning for camp: {{currentCamp.description}}</h2>
-  <h3>({{currentCamp.dateRangeText()}})</h3>
+  <div *ngIf='selectedCamp==null'>
+    <h2>Select a camp to perform assignments for.</h2>
+  </div>
+  <div *ngIf='selectedCamp'>
+	<h2>Currently assigning for camp: {{selectedCamp.description}}</h2>
+	<h3>({{selectedCamp.dateRangeText()}})</h3>
+  </div>
 </div>
-<div>
-	<label>Camp Description</label>
-	<input [(ngModel)]="currentCamp.description" placeholder='description'>
+<div *ngIf='selectedCamp'>
+  <label>Camp Description</label>
+  <input [(ngModel)]="selectedCamp.description" placeholder='description'>
 </div>
 <h2>Camps for 2017</h2>
 <ul class='camps'>
-	<li *ngFor='let camp of camps'>
-		<span class='badge'>{{camp.description}}</span>
-		({{camp.dateRangeText()}})
-	</li>
+  <li *ngFor='let camp of camps' (click)='onSelect(camp)' [class.selected]='camp == selectedCamp'>
+    <span class='badge'>{{camp.description}}</span>
+    		({{camp.dateRangeText()}})
+  </li>
 </ul>
 
