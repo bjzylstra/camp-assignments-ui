@@ -20,20 +20,39 @@ export class CampEditorComponent implements OnInit {
   title = 'Camps Editor';
   @Input() selectedCampId;
   camps = CAMPS;
-  selectedCamp: Camp;
-  datePipe: DatePipe;
+  datePipe: DatePipe = new DatePipe('en-US');
+  updateDescription: string;
   updateStartDateText: string;
+  updateEndDateText: string;
 
   constructor() {
   }
 
   ngOnInit() {
-    this.selectedCamp = this.camps.find(currentItem => currentItem.id === this.selectedCampId);
+    this.loadEditor(this.camps.find(currentItem => currentItem.id === this.selectedCampId));
+  }
+
+  /**
+   * Load the editor section with the specified camp data.
+   */
+  loadEditor(camp: Camp): void {
+    if (camp != null) {
+      this.updateDescription = camp.description;
+      this.updateStartDateText = this.datePipe.transform(camp.startDate, 'yyyy-MM-dd');
+      this.updateEndDateText = this.datePipe.transform(camp.endDate, 'yyyy-MM-dd');
+    } else {
+      this.updateDescription = '';
+      this.updateStartDateText = '';
+      this.updateEndDateText = '';
+    }
   }
 
   onSelect(camp: Camp): void {
-    this.selectedCamp = camp;
     this.selectedCampId = camp.id;
-    this.updateStartDateText = this.datePipe.transform(this.selectedCamp.startDate, 'yyyy-MM-dd');
+    this.loadEditor(camp);
+  }
+
+  saveEditor(): void {
+    console.info('Updated description = ' + this.updateDescription);
   }
 }
