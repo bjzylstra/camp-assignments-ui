@@ -27,9 +27,20 @@ export class CampEditorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.camps = this.campService.getCamps();
-    this.selectedCamp = this.camps.find(currentItem => currentItem.id === this.selectedCampId);
-    this.loadEditor(this.selectedCamp);
+    this.getCamps();
+  }
+
+  getCamps() {
+    this.campService.getCamps().then(camps => {
+      this.camps = camps;
+      console.info(this.camps);
+      if (this.camps != null) {
+        this.selectedCamp = this.camps.find(currentItem => currentItem.id === this.selectedCampId);
+      } else {
+        this.selectedCamp = null;
+      }
+      this.loadEditor(this.selectedCamp);
+    });
   }
 
   /**
@@ -56,7 +67,9 @@ export class CampEditorComponent implements OnInit {
   saveEditor(): void {
     console.info('Updated date = ' + this.updateStartDateText);
     this.selectedCamp.description = this.updateDescription;
-    this.selectedCamp.startDate = new Date(this.updateStartDateText);
-    this.selectedCamp.endDate = new Date(this.updateEndDateText);
+    let utcDate = new Date(this.updateStartDateText);
+    this.selectedCamp.startDate = new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
+    utcDate = new Date(this.updateEndDateText);
+    this.selectedCamp.endDate = new Date(utcDate.getUTCFullYear(), utcDate.getUTCMonth(), utcDate.getUTCDate());
   }
 }

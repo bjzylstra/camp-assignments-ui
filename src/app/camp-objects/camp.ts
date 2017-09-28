@@ -8,7 +8,7 @@ export class Camp {
   description: string;
   startDate: Date;
   endDate: Date;
-  datePipe: DatePipe = new DatePipe('en-US');
+  private datePipe: DatePipe = new DatePipe('en-US');
 
   constructor(id: number, description: string, startDate: Date, endDate: Date) {
     this.id = id;
